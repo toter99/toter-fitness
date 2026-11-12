@@ -3,6 +3,12 @@
 ## Zweck
 Fitness-System für QBCore. Admins setzen Trainingsstationen mit Props in die Welt. Spieler trainieren dort mit einem Minispiel ihre Werte Kraft, Ausdauer, Flexibilität und Kondition (0 bis 100). Der Charakter macht die Übung sichtbar für alle mit. Kostenlose Stationen geben bis +3, Studio-Stationen kosten $50 und geben bis +6.
 
+## Abhängigkeiten
+- qb-core (oder Anbindung nach ANSCHLUESSE.md)
+- oxmysql
+- lb-phone
+- optional: ox_target oder qb-target, qb-banking oder qb-management
+
 ## Status
 Version 1.0.0 (erstes öffentliches Release, github.com/toter99/toter-fitness, MIT). Interne Stände bis 3.4.0 sind darin aufgegangen, Änderungen ab jetzt in CHANGELOG.md. Spieler nutzen nur die Handy-Apps, im Spiel gibt es nur das Admin-Menü (/fitnessadmin). Server-Events sind pro Spieler gedrosselt (Main.Gedrosselt). Autor und Projektseite stehen in Config.Autor/Projektseite, Hinweis beim Start in der Server-Konsole, kleiner Vermerk im Admin-Menü und in den Apps.
 

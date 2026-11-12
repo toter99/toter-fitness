@@ -1,10 +1,12 @@
 name: Build
 
+# Läuft bei jedem Push auf main (oder master) und per Hand (Actions, Build, Run workflow).
+# Gibt es den Tag zur Version aus fxmanifest.lua schon (legt der Release-Knopf der Projekt-Webseite an),
+# aber noch kein GitHub-Release dazu, wird das Release mit der fertigen ZIP erstellt.
 on:
   push:
-    branches: [main]
-    tags: ['v*']
-  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -30,8 +32,8 @@ jobs:
           mkdir -p $ziel/Client/bin/Release $ziel/Server/bin/Release
           cp fxmanifest.lua README.md LICENSE CHANGELOG.md ANSCHLUESSE.md $ziel/
           cp Client/bin/Release/*.net.dll $ziel/Client/bin/Release/
-          cp Client/ziel.lua $ziel/Client/
           cp Server/bin/Release/*.net.dll $ziel/Server/bin/Release/
+          cp Client/ziel.lua $ziel/Client/
           cp -r html inventar sql $ziel/
           cd paket && zip -r ../toter-fitness.zip toter-fitness
 
@@ -41,8 +43,17 @@ jobs:
           path: toter-fitness.zip
 
       - name: Release
-        if: startsWith(github.ref, 'refs/tags/v')
-        uses: softprops/action-gh-release@v2
-        with:
-          files: toter-fitness.zip
-          body_path: CHANGELOG.md
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version=$(grep -oP "^version\s+['\"]\K[^'\"]+" fxmanifest.lua)
+          tag="v$version"
+          if ! git ls-remote --exit-code --tags origin "refs/tags/$tag" > /dev/null; then
+            echo "Tag $tag gibt es noch nicht, kein Release."
+            exit 0
+          fi
+          if gh release view "$tag" > /dev/null 2>&1; then
+            echo "Release $tag gibt es schon."
+            exit 0
+          fi
+          gh release create "$tag" toter-fitness.zip --verify-tag --title "toter-fitness $version" --notes-file CHANGELOG.md

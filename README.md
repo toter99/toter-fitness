@@ -81,7 +81,11 @@
 
 ## Installation
 
-1. Die fertige Version unter [Releases](https://github.com/toter99/toter-fitness/releases) laden. Die DLLs sind dort schon gebaut. Wer den Quellcode nimmt, baut selbst (siehe unten).
+1. Die fertige Version holen, die DLLs sind darin schon gebaut. Entweder als ZIP unter [Releases](https://github.com/toter99/toter-fitness/releases) oder per Git im Ordner `resources/`:
+   ```bash
+   git clone -b release --depth 1 https://github.com/toter99/toter-fitness.git
+   ```
+   Updates holt ihr dann mit `git pull` im Ordner. Wer den Quellcode von `main` nimmt, baut selbst (siehe unten).
 2. Den Ordner `toter-fitness` nach `resources/` legen und in der `server.cfg` eintragen:
    ```cfg
    ensure oxmysql
@@ -166,7 +170,7 @@ dotnet build Client/Client.csproj -c Release
 dotnet build Server/Server.csproj -c Release
 ```
 
-Die Ressource lädt `Client/bin/Release/*.net.dll` und `Server/bin/Release/*.net.dll`. Bei einem Tag `v*` baut GitHub Actions die Ressource und hängt sie als ZIP an das Release.
+Die Ressource lädt `Client/bin/Release/*.net.dll` und `Server/bin/Release/*.net.dll`. GitHub Actions baut bei jedem Push auf `main` und hängt bei einer neuen Version die fertige ZIP an das Release.
 
 | Ordner | Inhalt |
 |---|---|
