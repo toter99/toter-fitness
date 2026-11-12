@@ -1,0 +1,8 @@
+toter-fitness – Installation
+Stand: 59a1e7d vom 2026-11-12
+
+1. Den Ordner toter-fitness nach resources/[toter]/ auf dem FiveM-Server kopieren.
+2. In der server.cfg eintragen:  ensure toter-fitness
+3. Diese SQL-Dateien in der angegebenen Reihenfolge in die Datenbank einspielen:
+     - sql/tabellen.sql
+4. Server neu starten oder in txAdmin: refresh, dann ensure toter-fitness
