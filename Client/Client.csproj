@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net452</TargetFramework>
+    <AssemblyName>toter-fitness.Client.net</AssemblyName>
+    <RootNamespace>ToterFitness.Client</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <Authors>toter</Authors>
+    <DebugType>embedded</DebugType>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="CitizenFX.Core.Client" Version="1.0.*" ExcludeAssets="runtime" />
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+    <Reference Include="Microsoft.CSharp" />
+    <Compile Include="..\Shared\**\*.cs" />
+  </ItemGroup>
+</Project>

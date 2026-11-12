@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<!-- toter-fitness © toter · https://github.com/toter99/toter-fitness -->
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>GymDesk</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body class="ist-desk">
+  <div class="hx" id="app">
+    <header class="hx-kopf">
+      <div class="hx-datum" id="datum"></div>
+      <h1 id="gym">GymDesk</h1>
+      <div class="hx-rolle"><span id="rang"></span><span class="hx-pille" id="dienst"></span></div>
+    </header>
+
+    <div class="hx-segment" id="segment" hidden>
+      <button type="button" class="is-aktiv" data-seite="training">Training</button>
+      <button type="button" data-seite="kurse">Kurse</button>
+      <button type="button" data-seite="studio" id="segment-studio">Studio</button>
+    </div>
+
+    <div class="hx-seite" id="seite-training">
+      <section class="hx-karte hx-hinweis" id="kein-trainer" hidden></section>
+      <div id="training">
+        <h2 class="hx-abschnitt">Abrechnung</h2>
+        <section class="hx-karte hx-liste">
+          <div class="hx-zeile">
+            <span>Betrag<small id="steuer"></small></span>
+            <label class="hx-feld">$<input type="number" id="preis" min="0" inputmode="numeric"></label>
+          </div>
+        </section>
+        <h2 class="hx-abschnitt hx-mit-knopf">Deine Kunden <button type="button" class="hx-knopf" id="neu">Aktualisieren</button></h2>
+        <section class="hx-karte hx-liste" id="kunden"></section>
+
+      </div>
+    </div>
+
+    <div class="hx-seite" id="seite-kurse" hidden>
+      <h2 class="hx-abschnitt">Geplant</h2>
+      <section class="hx-karte hx-liste" id="kurs-liste"></section>
+
+      <div id="kurs-neu">
+      <h2 class="hx-abschnitt">Neuer Kurs</h2>
+      <section class="hx-karte hx-liste hx-formular">
+        <div class="hx-zeile"><span>Name</span><input class="hx-eingabe" id="kurs-titel" maxlength="60" placeholder="z. B. Yoga am Strand"></div>
+        <div class="hx-zeile"><span>Übung</span><select class="hx-eingabe" id="kurs-uebung"></select></div>
+        <div class="hx-zeile" id="kurs-route-zeile" hidden><span>Strecke</span><select class="hx-eingabe" id="kurs-route"></select></div>
+        <div class="hx-zeile"><span>Plätze</span><input class="hx-eingabe" id="kurs-max" type="number" min="1" value="10" inputmode="numeric"></div>
+        <div class="hx-zeile"><span>Tag</span><select class="hx-eingabe" id="kurs-tag"></select></div>
+        <div class="hx-zeile"><span>Beginn</span><span class="hx-zeit-wahl"><select class="hx-eingabe" id="kurs-stunde"></select>:<select class="hx-eingabe" id="kurs-minute"></select> Uhr</span></div>
+        <div class="hx-zeile"><span>Dauer</span><select class="hx-eingabe" id="kurs-dauer">
+          <option value="15">15 Minuten</option><option value="30">30 Minuten</option><option value="45">45 Minuten</option><option value="60" selected>60 Minuten</option><option value="90">90 Minuten</option>
+        </select></div>
+        <div class="hx-zeile"><span>Preis</span><label class="hx-feld">$<input type="number" id="kurs-preis" min="0" value="0" inputmode="numeric"></label></div>
+      </section>
+      <p class="hx-fuss hx-links" id="kurs-tipp">Stell dich dorthin, wo du den Kurs abhalten willst.</p>
+      <button type="button" class="hx-gross" id="kurs-planen">Kurs planen</button>
+      </div>
+    </div>
+
+    <div class="hx-seite" id="seite-studio" hidden>
+      <h2 class="hx-abschnitt">Mitgliedschaft</h2>
+      <section class="hx-karte hx-liste" id="tarife"></section>
+      <h2 class="hx-abschnitt">Shop am Empfang</h2>
+      <section class="hx-karte hx-liste" id="shop"></section>
+      <button type="button" class="hx-gross" id="speichern">Preise speichern</button>
+      <h2 class="hx-abschnitt">Team online</h2>
+      <section class="hx-karte hx-liste" id="team"></section>
+    </div>
+    <p class="hx-credit">toter-fitness · © toter</p>
+  </div>
+
+  <script src="gemeinsam.js"></script>
+  <script src="gymdesk.js"></script>
+</body>
+</html>

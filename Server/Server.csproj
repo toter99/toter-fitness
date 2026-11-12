@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>toter-fitness.Server.net</AssemblyName>
+    <RootNamespace>ToterFitness.Server</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <Authors>toter</Authors>
+    <DebugType>embedded</DebugType>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="CitizenFX.Core.Server" Version="1.0.*" ExcludeAssets="runtime" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <Compile Include="..\Shared\**\*.cs" />
+  </ItemGroup>
+</Project>

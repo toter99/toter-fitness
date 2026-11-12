@@ -1,0 +1,422 @@
+/* toter-ui – Design-Kit für NUI-Oberflächen. Klassen beginnen mit tu-, Farben nur über die Variablen. */
+
+:root {
+  --tu-bg-0: #060d1a;
+  --tu-bg-1: #0a1527;
+  --tu-bg-2: #0e1c33;
+  --tu-bg-3: #13243f;
+  --tu-line: rgba(120, 180, 240, 0.13);
+  --tu-line-strong: rgba(120, 180, 240, 0.26);
+
+  --tu-text: #e8eff9;
+  --tu-text-dim: #93a6c2;
+  --tu-text-faint: #5f7391;
+
+  --tu-accent: #19d6f2;
+  --tu-accent-strong: #00bfe6;
+  --tu-accent-soft: rgba(25, 214, 242, 0.12);
+  --tu-accent-grad: linear-gradient(135deg, #46e7ff 0%, #0fa8e4 100%);
+  --tu-on-accent: #04202b;
+
+  --tu-ok: #22e06b;
+  --tu-warn: #ffd21f;
+  --tu-danger: #ff3b4e;
+  --tu-badge: #ff1f5a;
+
+  --tu-health: #e8323c;
+  --tu-hunger: #f08a1c;
+  --tu-thirst: #1e8fe8;
+
+  --tu-radius-window: 16px;
+  --tu-radius-panel: 12px;
+  --tu-radius-tile: 9px;
+  --tu-radius-pill: 999px;
+
+  --tu-font: "Segoe UI", "Inter", "Helvetica Neue", Arial, sans-serif;
+  --tu-font-display: "Arial Black", "Segoe UI Black", "Segoe UI", Arial, sans-serif;
+
+  --tu-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(25, 214, 242, 0.04);
+  --tu-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  background: transparent;
+  color: var(--tu-text);
+  font: 14px/1.45 var(--tu-font);
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+  overflow: hidden;
+}
+
+[hidden] { display: none !important; }
+
+/* ---------------------------------------------------------------- Fenster */
+
+.tu-overlay {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(ellipse at center, rgba(4, 10, 22, 0.35), rgba(4, 10, 22, 0.6));
+}
+
+.tu-window {
+  width: min(900px, 94vw);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, var(--tu-bg-1) 0%, var(--tu-bg-0) 100%);
+  border: 1px solid var(--tu-line);
+  border-radius: var(--tu-radius-window);
+  box-shadow: var(--tu-shadow);
+  overflow: hidden;
+  animation: tu-in 0.22s var(--tu-ease);
+}
+
+@keyframes tu-in {
+  from { opacity: 0; transform: translateY(8px) scale(0.985); }
+  to   { opacity: 1; transform: none; }
+}
+
+.tu-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--tu-line);
+  background: linear-gradient(180deg, rgba(25, 214, 242, 0.05), transparent);
+}
+
+.tu-icon {
+  flex: none;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: var(--tu-accent-grad);
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(15, 168, 228, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+.tu-icon svg { width: 26px; height: 26px; }
+
+.tu-heading { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+
+.tu-title {
+  margin: 0;
+  font: 900 24px/1.1 var(--tu-font-display);
+  color: var(--tu-accent);
+  letter-spacing: 0.2px;
+}
+
+.tu-close {
+  margin-left: auto;
+  flex: none;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  border: 1px solid var(--tu-line-strong);
+  background: var(--tu-bg-2);
+  color: var(--tu-text);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.tu-close:hover { background: var(--tu-bg-3); border-color: var(--tu-accent); }
+.tu-close svg { width: 18px; height: 18px; }
+
+.tu-body { padding: 20px 22px 22px; overflow: auto; }
+
+.tu-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+/* ---------------------------------------------------------------- Flächen */
+
+.tu-panel {
+  background: rgba(10, 21, 39, 0.65);
+  border: 1px solid var(--tu-line);
+  border-radius: var(--tu-radius-panel);
+  padding: 16px 18px;
+}
+
+.tu-panel-title {
+  margin: 0 0 12px;
+  font: 900 17px/1.2 var(--tu-font-display);
+  color: var(--tu-accent);
+}
+
+.tu-hint { margin: 0; color: var(--tu-text-dim); font-size: 13px; text-align: center; }
+
+.tu-label { display: block; margin-bottom: 6px; color: var(--tu-text-dim); font-size: 12px; font-weight: 600; }
+
+.tu-divider { height: 1px; margin: 14px 0; background: var(--tu-line); border: 0; }
+
+/* ------------------------------------------------------- Fortschritt, Pill */
+
+.tu-progress {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 10px 4px 6px;
+  border-radius: var(--tu-radius-pill);
+  background: var(--tu-bg-2);
+  border: 1px solid var(--tu-line);
+  font-weight: 800;
+  font-size: 12px;
+}
+.tu-progress-track { width: 64px; height: 6px; border-radius: 3px; background: rgba(255, 255, 255, 0.08); overflow: hidden; }
+.tu-progress-fill { height: 100%; width: var(--value, 0%); background: var(--tu-ok); border-radius: 3px; transition: width 0.3s var(--tu-ease); }
+.tu-progress.is-warn .tu-progress-fill { background: var(--tu-warn); }
+.tu-progress.is-danger .tu-progress-fill { background: var(--tu-danger); }
+
+.tu-bar { height: 6px; border-radius: 3px; background: rgba(255, 255, 255, 0.07); overflow: hidden; }
+.tu-bar > span { display: block; height: 100%; width: var(--value, 0%); background: var(--tu-accent); border-radius: 3px; }
+
+/* ------------------------------------------------------------------ Legende */
+
+.tu-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; font-size: 12px; color: var(--tu-text-dim); }
+.tu-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; background: var(--c, var(--tu-accent)); }
+.tu-dot.is-ok { --c: var(--tu-ok); }
+.tu-dot.is-warn { --c: var(--tu-warn); }
+.tu-dot.is-danger { --c: var(--tu-danger); }
+
+/* ------------------------------------------------------------------ Buttons */
+
+.tu-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: var(--tu-radius-tile);
+  border: 1px solid var(--tu-line-strong);
+  background: var(--tu-bg-2);
+  color: var(--tu-text);
+  font: 700 13px var(--tu-font);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+}
+.tu-btn:hover { background: var(--tu-bg-3); border-color: var(--tu-accent); }
+.tu-btn:active { transform: translateY(1px); }
+.tu-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.tu-btn svg { width: 16px; height: 16px; }
+
+.tu-btn.is-primary { background: var(--tu-accent); border-color: var(--tu-accent); color: var(--tu-on-accent); }
+.tu-btn.is-primary:hover { background: #4ce2f8; }
+.tu-btn.is-danger { border-color: rgba(255, 59, 78, 0.5); color: #ff8592; }
+.tu-btn.is-danger:hover { background: rgba(255, 59, 78, 0.12); border-color: var(--tu-danger); }
+.tu-btn.is-block { width: 100%; }
+
+/* ------------------------------------------------------------------ Eingaben */
+
+.tu-input, .tu-select {
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: var(--tu-radius-tile);
+  border: 1px solid var(--tu-line);
+  background: rgba(6, 13, 26, 0.7);
+  color: var(--tu-text);
+  font: 14px var(--tu-font);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  user-select: text;
+}
+.tu-input::placeholder { color: var(--tu-text-faint); }
+.tu-input:focus, .tu-select:focus { border-color: var(--tu-accent); box-shadow: 0 0 0 3px var(--tu-accent-soft); }
+
+.tu-field + .tu-field { margin-top: 12px; }
+
+/* ------------------------------------------------------- Interaktionsmenü */
+
+.tu-menu {
+  width: 340px;
+  border-radius: var(--tu-radius-panel);
+  overflow: hidden;
+  background: var(--tu-bg-0);
+  border: 1px solid var(--tu-line);
+  box-shadow: var(--tu-shadow);
+  animation: tu-in 0.18s var(--tu-ease);
+}
+.tu-menu-head { padding: 12px 16px; background: var(--tu-accent); color: var(--tu-on-accent); font: 800 17px var(--tu-font); }
+.tu-menu-sub { padding: 9px 16px 6px; color: var(--tu-text-faint); font-size: 12px; }
+.tu-menu-list { margin: 0; padding: 0 0 6px; list-style: none; }
+.tu-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border-left: 3px solid transparent;
+  color: var(--tu-text);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+.tu-menu-item svg { width: 16px; height: 16px; color: var(--tu-accent); flex: none; }
+.tu-menu-item:hover { background: var(--tu-bg-2); }
+.tu-menu-item.is-active { background: var(--tu-accent-soft); border-left-color: var(--tu-accent); font-weight: 800; }
+.tu-menu-foot { padding: 10px 16px 12px; border-top: 2px solid var(--tu-accent); color: var(--tu-text); font-size: 12.5px; font-style: italic; }
+
+/* ------------------------------------------------- Inventar und Kacheln */
+
+.tu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(78px, 1fr)); gap: 10px; }
+
+.tu-slot {
+  position: relative;
+  aspect-ratio: 1 / 1.08;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 6px 6px;
+  border-radius: var(--tu-radius-tile);
+  background: var(--tu-bg-2);
+  border: 1px solid var(--tu-line);
+  cursor: pointer;
+  transition: border-color 0.15s, transform 0.12s;
+}
+.tu-slot:hover { border-color: var(--tu-accent); transform: translateY(-1px); }
+.tu-slot.is-selected { border-color: var(--tu-accent); box-shadow: 0 0 0 2px var(--tu-accent-soft); }
+.tu-slot img, .tu-slot .tu-slot-img { width: 46px; height: 46px; object-fit: contain; margin-bottom: auto; margin-top: 4px; }
+.tu-slot-qty {
+  width: 100%;
+  padding: 2px 0;
+  border-radius: 5px;
+  background: var(--tu-bg-0);
+  font-size: 11px;
+  font-weight: 700;
+  text-align: center;
+}
+.tu-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--tu-radius-pill);
+  background: var(--tu-badge);
+  color: #fff;
+  font-size: 11.5px;
+  font-weight: 800;
+  box-shadow: 0 2px 6px rgba(255, 31, 90, 0.4);
+}
+
+.tu-hotbar { display: flex; flex-direction: column; gap: 8px; }
+.tu-hotslot {
+  position: relative;
+  width: 52px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--tu-radius-tile);
+  background: var(--tu-bg-1);
+  border: 1px solid var(--tu-line);
+  color: var(--tu-text-dim);
+  font-weight: 600;
+}
+.tu-hotslot.is-filled { border: 1px dashed var(--tu-accent); color: var(--tu-text); }
+.tu-hotslot-count { position: absolute; right: 4px; bottom: 2px; font-size: 10px; color: var(--tu-accent); font-weight: 800; }
+
+/* ------------------------------------------------------------ Seitenleiste */
+
+.tu-rail { display: flex; flex-direction: column; gap: 6px; padding: 8px; background: var(--tu-bg-0); }
+.tu-rail-btn {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 11px;
+  background: transparent;
+  color: var(--tu-text);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.tu-rail-btn svg { width: 22px; height: 22px; }
+.tu-rail-btn:hover { background: var(--tu-bg-2); }
+.tu-rail-btn.is-active { background: var(--tu-accent); color: var(--tu-on-accent); }
+
+.tu-topbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  background: linear-gradient(90deg, var(--tu-accent) 0%, #4fe6fb 100%);
+  color: var(--tu-on-accent);
+  font: 700 15px var(--tu-font);
+}
+
+/* ------------------------------------------------------------- Statusringe */
+
+.tu-ring { --size: 46px; --value: 100; --c: var(--tu-accent); position: relative; width: var(--size); height: var(--size); }
+.tu-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.tu-ring circle { fill: none; stroke-width: 4; }
+.tu-ring .tu-ring-track { stroke: rgba(255, 255, 255, 0.08); }
+.tu-ring .tu-ring-value {
+  stroke: var(--c);
+  stroke-linecap: round;
+  stroke-dasharray: 113.1;
+  stroke-dashoffset: calc(113.1 - 113.1 * var(--value) / 100);
+  transition: stroke-dashoffset 0.4s var(--tu-ease);
+}
+.tu-ring-icon { position: absolute; inset: 0; display: grid; place-items: center; color: #fff; }
+.tu-ring-icon svg { width: 18px; height: 18px; transform: none; }
+.tu-ring.is-health { --c: var(--tu-health); }
+.tu-ring.is-hunger { --c: var(--tu-hunger); }
+.tu-ring.is-thirst { --c: var(--tu-thirst); }
+
+/* ------------------------------------------------------- Benachrichtigung */
+
+.tu-toasts { position: fixed; top: 24px; right: 24px; display: flex; flex-direction: column; gap: 10px; z-index: 50; }
+.tu-toast {
+  min-width: 260px;
+  max-width: 360px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px 14px;
+  border-radius: var(--tu-radius-panel);
+  background: var(--tu-bg-1);
+  border: 1px solid var(--tu-line);
+  border-left: 3px solid var(--c, var(--tu-accent));
+  box-shadow: var(--tu-shadow);
+  animation: tu-toast-in 0.25s var(--tu-ease);
+}
+.tu-toast b { display: block; color: var(--c, var(--tu-accent)); font-weight: 800; margin-bottom: 2px; }
+.tu-toast span { color: var(--tu-text-dim); font-size: 13px; }
+.tu-toast.is-ok { --c: var(--tu-ok); }
+.tu-toast.is-warn { --c: var(--tu-warn); }
+.tu-toast.is-danger { --c: var(--tu-danger); }
+.tu-toast.is-leaving { opacity: 0; transform: translateX(16px); transition: 0.25s var(--tu-ease); }
+@keyframes tu-toast-in { from { opacity: 0; transform: translateX(16px); } to { opacity: 1; transform: none; } }
+
+/* ------------------------------------------------------------- Listen */
+
+.tu-list { margin: 0; padding: 0; list-style: none; }
+.tu-list-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: var(--tu-radius-tile);
+  border: 1px solid transparent;
+}
+.tu-list-item + .tu-list-item { margin-top: 4px; }
+.tu-list-item:hover { background: var(--tu-bg-2); border-color: var(--tu-line); }
+.tu-list-meta { margin-left: auto; color: var(--tu-text-dim); font-size: 12px; font-variant-numeric: tabular-nums; }
+
+/* -------------------------------------------------------- Scrollbalken */
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--tu-bg-3); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--tu-line-strong); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

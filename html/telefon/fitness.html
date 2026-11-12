@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<!-- toter-fitness © toter · https://github.com/toter99/toter-fitness -->
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Fitness</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <div class="hx" id="app">
+    <header class="hx-kopf">
+      <div class="hx-datum" id="datum"></div>
+      <h1>Übersicht</h1>
+    </header>
+
+    <section class="hx-karte hx-ringe-karte">
+      <div class="hx-karte-kopf"><span class="hx-tag is-rot">Aktivität</span><span class="hx-zeit" id="reset"></span></div>
+      <div class="hx-ringe">
+        <svg viewBox="0 0 120 120" id="ringe" aria-hidden="true"></svg>
+        <ul class="hx-legende" id="legende"></ul>
+      </div>
+    </section>
+
+    <h2 class="hx-abschnitt">Werte</h2>
+    <div id="werte"></div>
+
+    <h2 class="hx-abschnitt" id="kurse-titel" hidden>Kurse</h2>
+    <section class="hx-karte hx-liste" id="kurse" hidden></section>
+
+    <h2 class="hx-abschnitt">Zustand</h2>
+    <section class="hx-karte hx-liste" id="zustand"></section>
+
+    <h2 class="hx-abschnitt" id="mitglied-titel">Mitgliedschaften</h2>
+    <section class="hx-karte hx-liste" id="mitglied"></section>
+
+    <h2 class="hx-abschnitt">In der Nähe</h2>
+    <section class="hx-karte hx-liste" id="stationen"></section>
+
+    <h2 class="hx-abschnitt">Bestenliste</h2>
+    <section class="hx-karte">
+      <select class="hx-auswahl" id="rekord-wahl"></select>
+      <div class="hx-liste hx-rekorde" id="rekorde"></div>
+      <p class="hx-unter" id="rekord-eigen"></p>
+    </section>
+
+    <h2 class="hx-abschnitt">Gesamt</h2>
+    <section class="hx-karte hx-liste">
+      <div class="hx-zeile"><span>Trainingseinheiten</span><b id="einheiten">0</b></div>
+      <div class="hx-zeile"><span>Körper</span><b id="koerper">normal</b></div>
+    </section>
+
+    <p class="hx-credit">toter-fitness · © toter</p>
+  </div>
+
+  <div class="hx-detail" id="detail" hidden>
+    <button type="button" class="hx-zurueck" id="zurueck">‹ Übersicht</button>
+    <div class="hx-kopf">
+      <h1 id="detail-name"></h1>
+    </div>
+    <section class="hx-karte">
+      <div class="hx-karte-kopf"><span class="hx-zeit" id="detail-zeitraum"></span></div>
+      <div class="hx-zahl hx-detail-zahl"><b id="detail-wert"></b><small>von 100</small></div>
+      <div class="hx-stufe" id="detail-stufe"></div>
+      <svg class="hx-kurve" id="kurve" viewBox="0 0 320 170" preserveAspectRatio="none" aria-hidden="true"></svg>
+      <div class="hx-achse"><span id="achse-von"></span><span id="achse-bis"></span></div>
+    </section>
+    <section class="hx-karte hx-liste" id="detail-zahlen"></section>
+  </div>
+
+  <script src="gemeinsam.js"></script>
+  <script src="fitness.js"></script>
+</body>
+</html>

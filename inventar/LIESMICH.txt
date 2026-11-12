@@ -1,0 +1,18 @@
+Items von toter-fitness
+
+1. Bilder: alle PNG aus diesem Ordner in den Bilder-Ordner des Inventars kopieren
+   (qb-inventory: html/images/, ox_inventory: web/images/)
+   (gymkarte.png, proteinshake.png, vitamine.png, muskelbalsam.png).
+
+2. Items: toter-fitness legt sie beim Start selbst an (QBCore.Functions.AddItem).
+   Meldet die Server-Konsole "Item ... nicht angelegt", diese Zeilen in
+   qb-core/shared/items.lua bei den anderen Items einfügen und den Server neu starten
+   (ox_inventory: Einträge in data/items.lua, siehe ANSCHLUESSE.md):
+
+   gymkarte     = { name = 'gymkarte',     label = 'Gym-Mitgliedskarte', weight = 0,   type = 'item', image = 'gymkarte.png',     unique = true,  useable = true, shouldClose = true, description = 'Mitgliedskarte für ein Fitnessstudio. Benutzen, um sie zu zeigen.' },
+   proteinshake = { name = 'proteinshake', label = 'Protein-Shake',      weight = 200, type = 'item', image = 'proteinshake.png', unique = false, useable = true, shouldClose = true, description = '2 Stunden lang +1 Punkt pro geschaffter Übung.' },
+   vitamine     = { name = 'vitamine',     label = 'Vitamin-Kapseln',    weight = 200, type = 'item', image = 'vitamine.png',     unique = false, useable = true, shouldClose = true, description = '24 Stunden lang bauen deine Fitness-Werte nicht ab.' },
+   muskelbalsam = { name = 'muskelbalsam', label = 'Muskelbalsam',       weight = 200, type = 'item', image = 'muskelbalsam.png', unique = false, useable = true, shouldClose = true, description = 'Beendet den Muskelkater sofort.' },
+
+Auf der Mitgliedskarte stehen Gym, Name, Geburtsdatum, Mitgliedsnummer und Ablaufdatum. Die Daten liegen
+im Item (info) und werden beim Benutzen auf der Karte angezeigt. Das Inventarbild selbst ist fest.

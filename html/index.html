@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<!-- toter-fitness © toter · https://github.com/toter99/toter-fitness -->
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>toter-fitness</title>
+<link rel="stylesheet" href="toter-ui.css">
+<link rel="stylesheet" href="fitness.css">
+</head>
+<body>
+
+  <!-- Fitness-Menü (Taste, Radialmenü) -->
+  <div class="tu-overlay" id="stats" data-nui-root hidden>
+    <section class="tu-window fx-menue" role="dialog" aria-labelledby="menue-titel">
+      <header class="tu-header">
+        <div class="tu-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5v11M17.5 6.5v11M3 9v6M21 9v6M6.5 12h11"/></svg>
+        </div>
+        <div class="tu-heading">
+          <h1 class="tu-title" id="menue-titel">Fitness-Admin</h1>
+          <span class="fx-credit">toter-fitness · © toter</span>
+        </div>
+        <button class="tu-close" type="button" aria-label="Schließen" onclick="Nui.close()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </header>
+
+      <div class="tu-body">
+        <!-- Admin -->
+        <div class="fx-seite" id="seite-admin">
+          <nav class="fx-adminreiter" id="admin-unter">
+            <button type="button" data-unter="stationen" class="is-active">Stationen</button>
+            <button type="button" data-unter="spieler">Spieler</button>
+            <button type="button" data-unter="gyms">Gyms</button>
+            <button type="button" data-unter="kurse">Kurse</button>
+            <button type="button" data-unter="besten">Bestenliste</button>
+            <button type="button" data-unter="diagnose">Diagnose</button>
+          </nav>
+
+          <div class="fx-unterseite" data-unter="stationen">
+            <div class="tu-panel">
+              <div class="tu-panel-title">Station hier setzen</div>
+              <div class="tu-field">
+                <label class="tu-label" for="neu-uebung">Übung</label>
+                <select class="tu-select" id="neu-uebung"></select>
+              </div>
+              <div class="tu-field">
+                <label class="tu-label" for="neu-prop">Prop (leer = Standard, - = keins)</label>
+                <div class="fx-zeile-2">
+                  <input class="tu-input" id="neu-prop" placeholder="Standard">
+                  <button class="tu-btn" type="button" id="neu-vorschau" title="Modell 20 Sekunden vor dir anzeigen">Vorschau</button>
+                </div>
+              </div>
+              <div class="tu-field">
+                <div class="fx-zeile-2">
+                  <button class="tu-btn is-primary" type="button" id="neu-platzieren" title="Halbtransparentes Prop platzieren, drehen und Höhe einstellen">Platzieren</button>
+                  <button class="tu-btn" type="button" id="neu-setzen">An meiner Position</button>
+                </div>
+              </div>
+            </div>
+            <div class="tu-panel fx-verwalten">
+              <div class="tu-panel-title">Stationen in der Nähe</div>
+              <ul class="tu-list fx-stationen" id="admin-liste"></ul>
+            </div>
+          </div>
+
+          <div class="fx-unterseite" data-unter="spieler" hidden>
+            <div class="tu-panel">
+              <div class="tu-field fx-zeile-2">
+                <input class="tu-input" id="sp-id" type="number" min="1" placeholder="Spieler-ID">
+                <button class="tu-btn" type="button" id="sp-laden">Laden</button>
+              </div>
+              <p class="tu-hint" id="sp-fehler" hidden></p>
+              <div id="sp-inhalt" hidden>
+                <p class="tu-hint" id="sp-name"></p>
+              </div>
+            </div>
+            <div id="sp-bereiche" hidden>
+              <div class="tu-panel">
+                <div class="tu-panel-title">Werte</div>
+                <ul class="fx-sp-liste" id="sp-liste"></ul>
+                <div class="tu-field fx-zeile-2">
+                  <button class="tu-btn is-primary" type="button" id="sp-speichern">Werte speichern</button>
+                  <button class="tu-btn" type="button" id="sp-alle">Heute alles freigeben</button>
+                </div>
+              </div>
+              <div class="tu-columns">
+                <div class="tu-panel">
+                  <div class="tu-panel-title">Zustände</div>
+                  <ul class="fx-sp-zustaende">
+                    <li><span id="sp-kater"></span><button class="tu-btn" type="button" id="sp-kater-knopf">Muskelkater geben</button></li>
+                    <li><span id="sp-shake"></span><button class="tu-btn" type="button" id="sp-shake-knopf">Entfernen</button></li>
+                    <li><span id="sp-vitamine"></span><button class="tu-btn" type="button" id="sp-vitamine-knopf">Entfernen</button></li>
+                  </ul>
+                </div>
+                <div class="tu-panel">
+                  <div class="tu-panel-title">Probetage</div>
+                  <ul class="fx-sp-zustaende" id="sp-probetage"></ul>
+                </div>
+              </div>
+              <div class="tu-panel">
+                <div class="tu-panel-title">Mitgliedskarte ausstellen oder verlängern</div>
+                <div class="tu-field">
+                <label class="tu-label" for="karte-gym-wahl">Gym</label>
+                <select class="tu-select" id="karte-gym-wahl"></select>
+              </div>
+              <div class="tu-field fx-zeile is-karte">
+                <div>
+                  <label class="tu-label" for="karte-ziel">Spieler-ID</label>
+                  <input class="tu-input" id="karte-ziel" type="number" min="1">
+                </div>
+                <div>
+                  <label class="tu-label" for="karte-dauer">Dauer</label>
+                  <input class="tu-input" id="karte-dauer" type="number" min="1" value="30">
+                </div>
+                <div>
+                  <label class="tu-label" for="karte-einheit">&nbsp;</label>
+                  <select class="tu-select" id="karte-einheit">
+                    <option value="60">Minuten</option>
+                    <option value="3600">Stunden</option>
+                    <option value="86400" selected>Tage</option>
+                  </select>
+                </div>
+              </div>
+              <div class="tu-field">
+                <button class="tu-btn is-primary is-block" type="button" id="karte-los">Ausstellen / verlängern</button>
+              </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="fx-unterseite" data-unter="gyms" hidden>
+            <div class="tu-panel">
+              <div class="tu-panel-title">Gyms</div>
+              <div class="tu-field fx-zeile-2">
+                <input class="tu-input" id="gym-name" maxlength="40" placeholder="Name, z. B. Muscle Beach Gym">
+                <button class="tu-btn is-primary" type="button" id="gym-neu">Anlegen</button>
+              </div>
+              <ul class="tu-list fx-gyms" id="gym-liste"></ul>
+            </div>
+          </div>
+
+          <div class="fx-unterseite" data-unter="kurse" hidden>
+            <div class="tu-panel">
+              <div class="tu-panel-title">Alle geplanten Kurse</div>
+              <ul class="tu-list fx-admin-kurse" id="admin-kurse"></ul>
+            </div>
+          </div>
+
+          <div class="fx-unterseite" data-unter="besten" hidden>
+            <div class="tu-panel">
+              <div class="tu-field fx-zeile-2">
+                <select class="tu-select" id="admin-besten-uebung"></select>
+                <button class="tu-btn is-danger" type="button" id="admin-besten-reset">Liste zurücksetzen</button>
+              </div>
+              <ul class="tu-list fx-admin-besten" id="admin-besten"></ul>
+            </div>
+          </div>
+
+          <div class="fx-unterseite" data-unter="diagnose" hidden>
+            <div class="tu-panel fx-diagnose">
+              <div class="fx-diagnose-knoepfe">
+                <button class="tu-btn" type="button" data-diagnose="stationen">Stationen und Props</button>
+                <button class="tu-btn" type="button" data-diagnose="charakter">Mein Charakter</button>
+                <button class="tu-btn" type="button" data-diagnose="kleidung">Kleidungspakete</button>
+              </div>
+              <pre class="fx-ausgabe" id="diagnose-ausgabe" hidden></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Minispiel während des Trainings -->
+  <div class="fx-spiel" id="spiel" data-nui-root hidden>
+    <div class="fx-kopf">
+      <div>
+        <div class="fx-titel" id="spiel-titel">Training</div>
+        <div class="fx-unter" id="spiel-stat"></div>
+      </div>
+      <div class="fx-zeit" id="spiel-zeit">0</div>
+    </div>
+
+    <div class="fx-feld" id="feld-kraft" hidden>
+      <div class="fx-kraft">
+        <div class="fx-saeule">
+          <div class="fx-saeule-fill" id="kraft-fill"></div>
+          <div class="fx-schwelle"><span>80 %</span></div>
+        </div>
+        <div class="fx-kraft-info">
+          <div class="fx-zahl" id="kraft-wdh">0</div>
+          <div class="fx-label">Wiederholungen</div>
+          <div class="fx-last" id="kraft-last"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fx-feld" id="feld-dino" hidden>
+      <canvas id="dino" width="560" height="170"></canvas>
+    </div>
+
+    <div class="fx-feld" id="feld-balance" hidden>
+      <div class="fx-balance">
+        <div class="fx-zone" id="balance-zone"></div>
+        <div class="fx-nadel" id="balance-nadel"></div>
+      </div>
+      <div class="tu-bar fx-treffer"><span id="balance-quote"></span></div>
+    </div>
+
+    <div class="fx-feld" id="feld-yoga" hidden>
+      <div class="fx-yoga">
+        <div class="fx-stick" id="yoga-l">
+          <div class="fx-stick-ziel" id="yoga-l-ziel"></div>
+          <div class="fx-stick-punkt" id="yoga-l-punkt"></div>
+          <span>WASD</span>
+        </div>
+        <div class="fx-yoga-mitte">
+          <div class="fx-atem" id="yoga-atem"></div>
+          <div class="fx-yoga-text" id="yoga-text">Haltung finden</div>
+        </div>
+        <div class="fx-stick" id="yoga-r">
+          <div class="fx-stick-ziel" id="yoga-r-ziel"></div>
+          <div class="fx-stick-punkt" id="yoga-r-punkt"></div>
+          <span>Pfeile</span>
+        </div>
+      </div>
+      <div class="fx-reihe"><span id="yoga-stand">Haltung 1 / 3</span><span></span></div>
+    </div>
+
+    <div class="fx-feld" id="feld-rhythmus" hidden>
+      <div class="fx-rhythmus">
+        <div class="fx-taste" id="rhythmus-taste">W</div>
+        <svg class="fx-ring" viewBox="0 0 100 100" aria-hidden="true">
+          <circle cx="50" cy="50" r="44" class="fx-ring-bg"/>
+          <circle cx="50" cy="50" r="44" class="fx-ring-zeit" id="rhythmus-ring"/>
+        </svg>
+      </div>
+      <div class="fx-reihe"><span id="rhythmus-stand">0 / 0</span><span id="rhythmus-combo"></span></div>
+    </div>
+
+    <p class="fx-hilfe" id="spiel-hilfe"></p>
+    <div class="fx-ergebnis" id="spiel-ergebnis" hidden></div>
+  </div>
+
+  <!-- Gym-Empfang -->
+  <div class="tu-overlay" id="empfang" data-nui-root hidden>
+    <section class="tu-window fx-empfang" role="dialog" aria-labelledby="empfang-titel">
+      <header class="tu-header">
+        <div class="tu-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M7 15h4"/></svg>
+        </div>
+        <div class="tu-heading">
+          <h1 class="tu-title" id="empfang-titel">Empfang</h1>
+          <span class="fx-koerper" id="empfang-unter"></span>
+        </div>
+        <button class="tu-close" type="button" aria-label="Schließen" onclick="Nui.close()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </header>
+      <div class="tu-body">
+        <p class="tu-hint" id="empfang-karte" hidden></p>
+        <p class="tu-hint fx-nur-preise" id="empfang-info" hidden>Hier siehst du nur die Preise. Kaufen kannst du bei den Mitarbeitern am Empfang.</p>
+        <div class="fx-probetag" id="empfang-probetag" hidden>
+          <div><b>Probetag</b></div>
+          <button class="tu-btn is-primary" type="button" id="empfang-probetag-knopf">Probetag</button>
+        </div>
+        <div class="tu-field" id="empfang-kunden-feld" hidden>
+          <label class="tu-label" for="empfang-kunde">Kunde in der Nähe</label>
+          <select class="tu-select" id="empfang-kunde"></select>
+          <p class="tu-hint" id="empfang-keiner" hidden>Niemand in der Nähe. Der Kunde muss neben dir am Empfang stehen.</p>
+        </div>
+        <div class="tu-label" id="empfang-tarife-titel">Mitgliedschaft</div>
+        <div class="fx-tarife" id="empfang-tarife"></div>
+        <div class="tu-field">
+          <button class="tu-btn is-primary is-block" type="button" id="empfang-los">Angebot schicken</button>
+        </div>
+        <hr class="tu-divider">
+        <div class="tu-label" id="empfang-shop-titel">Supplements</div>
+        <ul class="fx-shop" id="empfang-shop"></ul>
+      </div>
+    </section>
+  </div>
+
+  <!-- Angebot für den Kunden -->
+  <div class="tu-overlay" id="angebot" data-nui-root hidden>
+    <section class="tu-window fx-angebot" role="dialog" aria-labelledby="angebot-titel">
+      <header class="tu-header">
+        <div class="tu-heading">
+          <h1 class="tu-title" id="angebot-titel">Mitgliedschaft</h1>
+          <span class="fx-koerper" id="angebot-zeit"></span>
+        </div>
+      </header>
+      <div class="tu-body">
+        <p id="angebot-text"></p>
+        <div class="fx-angebot-preis" id="angebot-preis"></div>
+        <div class="fx-zeile-2 fx-angebot-knoepfe">
+          <button class="tu-btn" type="button" id="angebot-nein">Ablehnen</button>
+          <button class="tu-btn is-primary" type="button" id="angebot-ja">Annehmen und bezahlen</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Mitgliedskarte (Item benutzen) -->
+  <div class="fx-karte-platz" id="karte-platz" hidden>
+    <article class="fx-karte" id="karte">
+      <div class="fx-karte-muster" aria-hidden="true"></div>
+      <svg class="fx-karte-wasser" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 6.5v11M17.5 6.5v11M3 9v6M21 9v6M6.5 12h11"/></svg>
+      <header class="fx-karte-kopf">
+        <div>
+          <div class="fx-karte-art">Gym Membership</div>
+          <div class="fx-karte-gym" id="karte-gym">Fitness Club</div>
+        </div>
+        <div class="fx-karte-logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M6.5 6.5v11M17.5 6.5v11M3 9v6M21 9v6M6.5 12h11"/></svg>
+        </div>
+      </header>
+      <div class="fx-karte-mitte">
+        <div class="fx-karte-chip" aria-hidden="true"><i></i><i></i><i></i></div>
+        <dl class="fx-karte-daten">
+          <div><dt>Name:</dt><dd id="karte-name">-</dd></div>
+          <div><dt>Geburtsdatum:</dt><dd id="karte-geburt">-</dd></div>
+          <div><dt>Mitglieds-Nr.:</dt><dd id="karte-nummer">-</dd></div>
+          <div><dt>Gültig bis:</dt><dd id="karte-ablauf">-</dd></div>
+        </dl>
+      </div>
+      <footer class="fx-karte-fuss">
+        <span class="fx-karte-member">Member</span>
+        <span class="fx-karte-rest" id="karte-rest"></span>
+      </footer>
+    </article>
+    <div class="fx-karte-unter" id="karte-unter"></div>
+  </div>
+
+<script src="nui.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
